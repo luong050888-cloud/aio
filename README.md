@@ -5,4 +5,4 @@ elif command -v apk >/dev/null 2>&1; then
     apk update && apk add wget
 elif command -v brew >/dev/null 2>&1; then
     brew install wget
-fi && wget -qO- https://raw.githubusercontent.com/thutrang0410/aio/main/vietbot-aio.sh | sh
+fi && wget -qO- https://raw.githubusercontent.com/luong050888-cloud/aio/main/voicebot.sh | sh
