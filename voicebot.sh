@@ -5,7 +5,7 @@ ADB_DEVICE_PORT="5555"
 ADB_DEVICE="$ADB_DEVICE_IP:$ADB_DEVICE_PORT"
 ADB="adb"
 
-BASE_URL="https://github.com/thutrang0410/aio/releases/download/acb"
+BASE_URL="https://github.com/luong050888-cloud/aio/releases/download/abc"
 PACKAGE_NAME="info.dourok.voicebot"
 
 FREE_APK="free.apk"
@@ -14,7 +14,7 @@ AIBOXPLUS_APK="aibox+.apk"
 DLNA_APK="auto-dlna.apk"
 UNI_SOUND_APK="uni-sound.apk"
 
-log_info() { echo "[CHANGG] $*"; }
+log_info() { echo "[LUONG] $*"; }
 
 open_browser() {
     URL="http://192.168.43.1:8081"
@@ -90,7 +90,7 @@ wait_for_wifi() {
     local prompt_shown=0
     while ! ping -c 1 -W 1 "$ADB_DEVICE_IP" >/dev/null 2>&1; do
         if [ "$prompt_shown" -eq 0 ]; then
-            echo "[PHICOMM-R1] Hãy kết nối tới Wifi của loa: Phicomm R1"
+            echo "[LUONG] Hãy kết nối tới Wifi của loa: Phicomm R1"
             prompt_shown=1
         fi
         sleep 3
@@ -139,7 +139,7 @@ install_apk() {
 show_menu() {
     clear
     echo "======================================="
-    echo "||   CÀI ĐẶT ALL-IN-ONE BY CHANGG    ||"
+    echo "||    CÀI ĐẶT ALL-IN-ONE BY LUONG    ||"
 	echo "||  LƯU Ý: FREE/PREMIUM CỦA VIETBOT  ||"
     echo "======================================="
 	echo "||   CÀI ĐẶT AI - DLNA - UNISOUND    ||"
