@@ -7,10 +7,12 @@ ADB="adb"
 
 BASE_URL="https://github.com/luong050888-cloud/aio/releases/download/abc"
 PACKAGE_NAME="info.dourok.voicebot"
+PACKAGES_NAME="com.wifi.transfer.pro"
 
 FREE_APK="free.apk"
 PREMIUM_APK="premium.apk"
 AIBOXPLUS_APK="aibox+.apk"
+MUSIC_PRO="music-pro.apk"
 DLNA_APK="auto-dlna.apk"
 UNI_SOUND_APK="uni-sound.apk"
 
@@ -127,6 +129,11 @@ launch() {
     "$ADB" -s "$ADB_DEVICE" shell am start -n "$PACKAGE_NAME/.java.activities.MainActivity"
 }
 
+launchs() {
+    log_info "Khởi chạy ứng dụng Music..."
+    "$ADB" -s "$ADB_DEVICE" shell am start -n "$PACKAGES_NAME/com.wifi.transfer.pro.MainActivity"
+}
+
 install_apk() {
     local local_path="$1"
     local apk_file=$(basename "$local_path")
@@ -229,6 +236,65 @@ main() {
                 open_browser
                 exit 0
                 ;;
+			8)
+        case "$choice" in
+            8) APK=$MUSIC_PRO ;;
+        esac
+                echo ""
+                echo "[1/2] Chuẩn bị tải file cập nhật."
+                progress_download "$BASE_URL/$APK" "$HOME/$APK" "MUSIC PRO"
+                
+                echo ""
+                echo "[2/2] Cài đặt MUSIC."
+                connect_adb
+                
+                log_info "Kiểm tra làm sạch thiết bị..."
+                "$ADB" -s "$ADB_DEVICE" shell /system/bin/pm uninstall "$PACKAGES_NAME"
+                
+                install_apk "$HOME/$APK"
+                launchs
+                
+                echo ""
+				echo "Đang mở trang cấu hình..."
+                echo "Cài đặt hoàn tất."
+                sleep 1
+                open_browsers
+                exit 0
+                ;;
+			9)
+        case "$choice" in
+            9) APK=$MUSIC_PRO ;;
+        esac
+                echo ""
+                echo "[1/2] Chuẩn bị tải file."
+                progress_download "$BASE_URL/$APK" "$HOME/$APK" "MUSIC PRO"
+                progress_download "$BASE_URL/$DLNA_APK" "$HOME/$DLNA_APK" "DLNA"
+                progress_download "$BASE_URL/$UNI_SOUND_APK" "$HOME/$UNI_SOUND_APK" "Unisound"
+                
+                echo ""
+                echo "[2/2] Cài đặt MUSIC."
+                connect_adb
+                
+                log_info "Kiểm tra làm sạch thiết bị..."
+                "$ADB" -s "$ADB_DEVICE" shell /system/bin/pm uninstall "$PACKAGES_NAME"
+                
+                install_apk "$HOME/$APK"
+                launchs
+                
+                install_apk "$HOME/$DLNA_APK"
+                install_apk "$HOME/$UNI_SOUND_APK"
+                
+                "$ADB" -s "$ADB_DEVICE" shell settings put secure install_non_market_apps 1
+                
+                echo ""
+                log_info "Đang khởi động lại loa..."
+				log_info "Cài đặt hoàn tất."
+				log_info "Vào wifi Phicomm R1, truy cập 192.168.43.1:9999 để cấu hình Wi-Fi cho thiết bị."
+                sleep 2
+                "$ADB" -s "$ADB_DEVICE" reboot
+                
+                exit 0
+                ;;	
             0) exit 0 ;;
             *) echo "Lựa chọn không hợp lệ!"; sleep 2 ;;
         esac
